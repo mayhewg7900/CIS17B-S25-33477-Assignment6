@@ -24,15 +24,18 @@ public:
     ~MainWindow();
 
 private slots:
+    // Slotted events prototypes
     void onAddItemClicked();
     void onFindItemClicked();
     void onRemoveItemClicked();
     void duplicateItemMessage(const QString& message);
 
 signals:
+    // Signals prototypes
     void duplicateItemWarning(const QString& message);
 
 private:
+    // Declaring much of the QT widgets and objects that are in use
     QLabel *idLabel, *descLabel, *locLabel;
     QHBoxLayout *idBox, *descBox, *locBox;
     QLineEdit *idInput, *descInput, *locInput;
@@ -42,8 +45,10 @@ private:
     QMenu *fileMenu, *helpMenu;
     QAction *exitAction, *aboutAction;
 
+    // Delcaring the StorageManager class
     StorageManager manager;
 
+    // Counter intended for access to items on the list, as well as iterating through it.
     int itemCounter = 0;
 };
 

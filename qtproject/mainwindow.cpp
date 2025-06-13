@@ -9,25 +9,28 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    // Defining line edits for addButton
+    // Defining the horizontal box as well as the contents for the ID input
     idBox = new QHBoxLayout;
     idLabel = new QLabel("Enter Item ID: ", this);
     idInput = new QLineEdit(this);
     idBox->addWidget(idLabel);
     idBox->addWidget(idInput);
 
+    // Defining the horizontal box for the description input
     descBox = new QHBoxLayout;
     descLabel = new QLabel("Enter Item Desc: ", this);
     descInput = new QLineEdit(this);
     descBox->addWidget(descLabel);
     descBox->addWidget(descInput);
 
+    // Defining the horizontal box for the location input
     locBox = new QHBoxLayout;
     locLabel = new QLabel("Enter Item Location: ", this);
     locInput = new QLineEdit(this);
     locBox->addWidget(locLabel);
     locBox->addWidget(locInput);
 
+    // Hiding all created labels until in use
     idLabel->hide();
     idInput->hide();
 
@@ -46,10 +49,11 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *button = new QPushButton("Click me", this);
     layout->addWidget(button);
 
-    // Add item button initialization
+    // Adding item button initialization
     addButton = new QPushButton("Add Item", this);
     layout->addWidget(addButton);
 
+    // Adding confirm button initialization
     confirmButton = new QPushButton("Confirm", this);
     confirmButton->hide();
     layout->addWidget(confirmButton);
@@ -59,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addLayout(descBox);
     layout->addLayout(locBox);
 
+    // Adding an item list widget
     itemList = new QListWidget(this);
     layout->addWidget(itemList);
 
@@ -79,15 +84,19 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->setNativeMenuBar(false);
 
 
+    // Connecting the exit action upon file menu hover
     connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
     // Optional: connect signals/slots
     connect(button, &QPushButton::clicked, this, []() {
         qDebug("Button clicked!");
     });
+
+    // Adding the onAddItemClicked event upon addButton click
     connect(addButton, &QPushButton::clicked, this, [this]() {
         onAddItemClicked();
     });
 
+    // Confirm button functionality on click, adding a new item
     connect(confirmButton, &QPushButton::clicked, this, [this]() {
         idLabel->hide();
         idInput->hide();
@@ -109,15 +118,18 @@ MainWindow::MainWindow(QWidget *parent)
         item->setText(idInput->text());
     });
 
+    // About action, displaying a message box
     connect(aboutAction, &QAction::triggered, this, []() {
         QMessageBox::about(nullptr, "About", "Made by Matthew Garamone for CIS-17B");
     });
 }
 
+// Main window deconstructor
 MainWindow::~MainWindow()
 {
 }
 
+// Added item click event
 void MainWindow::onAddItemClicked() {
     // Your logic here
     qDebug("Add Item clicked");
@@ -133,16 +145,19 @@ void MainWindow::onAddItemClicked() {
     confirmButton->show();
 }
 
+// Find item click event
 void MainWindow::onFindItemClicked() {
     // Your logic here
     qDebug("Find Item clicked");
 }
 
+// Remove item click event
 void MainWindow::onRemoveItemClicked() {
     // Your logic here
     qDebug("Remove Item clicked");
 }
 
+// Message for duplicate item detection, not yet implemented
 void MainWindow::duplicateItemMessage(const QString& message) {
     QMessageBox::warning(this, "Duplicate Item Detected", message);
 }
